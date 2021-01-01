@@ -24,7 +24,7 @@ db.once('open', () => {
       amount: 65,
     },
     {
-      name: '神力女超人1984',
+      name: '電影：神力女超人1984',
       category: '休閒娛樂',
       amount: 650,
     },
