@@ -10,15 +10,15 @@ router.get('/', (req, res) => {
   Record.find()
     .lean()
     .then((records) => {
-      recordList = records
       records.forEach((record) => {
         totalAmount += record.amount
         const date = new Date(record.date)
         const year = date.getFullYear()
         const month = date.getMonth() + 1
         const day = date.getDate()
-        record.date = `${year} / ${month} / ${day}`
+        record.date = `${year}/${month}/${day}`
       })
+      recordList = records
     })
     .catch((error) => console.log(error))
 
