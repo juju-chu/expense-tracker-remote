@@ -27,7 +27,9 @@
         <div class="col-2">{{this.amount}}</div>
         <div class="col-4 ml-auto">
           <a class="btn btn-primary" href="./records/{{ this._id }}/edit">修改</a>
-          <a class="btn btn-danger" href="">刪除</a>
+          <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+            <button class="btn btn-danger" type="submit">刪除</button>
+          </form>
         </div>
       </li>
       {{/each}}
