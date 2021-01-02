@@ -21,7 +21,7 @@ db.once('open', () => {
     },
     {
       name: '其他',
-      icon: 'https://fontawesome.com/icons/pen?style=solid',
+      icon: '<i class="fas fa-pen"></i>',
     },
   ]).then(() => {
     db.close()

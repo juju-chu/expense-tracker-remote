@@ -1,0 +1,43 @@
+<div class="container col-8">
+  <div class="d-flex justify-content-center mt-4">
+    <h6 class="text-primary">*必填欄位</h6>
+    <h2 class="ml-3">請輸入你的支出</h2>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <form action="/records" method="POST">
+      <div class="input-group">
+        <div class="form-group d-flex">
+          <h4 class="col-auto">名稱*</h3>
+          <input type="text" class="form-control" name="name" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="form-group d-flex">
+          <h4 class="col-auto">日期*</h3>
+          <input type="date" class="form-control" name="date" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="form-group d-flex">
+          <h4 class="col-auto">類別*</h3>
+          <select class="form-control" name="category" required>
+          {{#each categories}}
+            <option>{{this.name}}</option>
+          {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="form-group d-flex">
+          <h4 class="col-auto">金額*</h3>
+          <input type="text" class="form-control" name="amount" required>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row-reverse">
+        <button type="submit" class="btn btn-primary mt-3">新增支出</button>
+      </div>
+    </form>
+  </div>
+</div>
