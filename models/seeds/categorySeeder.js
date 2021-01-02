@@ -5,19 +5,19 @@ db.once('open', () => {
   Category.create([
     {
       name: '家居物業',
-      icon: 'https://fontawesome.com/icons/home?style=solid',
+      icon: '<i class="fas fa-home"></i>',
     },
     {
       name: '交通出行',
-      icon: 'https://fontawesome.com/icons/shuttle-van?style=solid',
+      icon: '<i class="fas fa-shuttle-van"></i>',
     },
     {
       name: '休閒娛樂',
-      icon: 'https://fontawesome.com/icons/grin-beam?style=solid',
+      icon: '<i class="fas fa-grin-beam"></i>',
     },
     {
       name: '餐飲食品',
-      icon: 'https://fontawesome.com/icons/utensils?style=solid',
+      icon: '<i class="fas fa-utensils"></i>',
     },
     {
       name: '其他',

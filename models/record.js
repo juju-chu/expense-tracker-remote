@@ -13,6 +13,9 @@ const recordSchema = new Schema({
     type: String,
     required: [true, '請選擇一個類別'],
   },
+  categoryIcon: {
+    type: String,
+  },
   amount: {
     type: Number,
     required: true,
