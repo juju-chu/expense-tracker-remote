@@ -6,3 +6,6 @@ Desktop.ini
 node_modules
 *.log
 *.gz
+
+# other
+*.txt
