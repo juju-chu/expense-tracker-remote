@@ -4,9 +4,8 @@
     <div class="form-group mt-3">
       <form action="/category" method="POST">
         <select class="form-control" onchange="this.form.submit()" name="category">
-          <option>---類別---</option>
           {{#each categories}}
-            <option>{{this.name}}</option>
+            <option {{#compare this.name ../categorySelected}}selected{{/compare}}>{{this.name}}</option>
           {{/each}}
          </select>
       </form>

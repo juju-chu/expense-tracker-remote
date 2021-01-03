@@ -1,15 +1,7 @@
 const express = require('express')
-const hbs = require('handlebars')
 const router = express.Router()
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
-
-hbs.registerHelper('compare', function (item1, item2, options) {
-  if (item1 === item2) {
-    return options.fn(this)
-  }
-  return options.inverse(this)
-})
 
 router.get('/new', (req, res) => {
   Category.find()
@@ -60,7 +52,6 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  console.log(req.body.date)
   Category.find()
     .lean()
     .then((categories) => {

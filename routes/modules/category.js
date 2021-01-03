@@ -5,14 +5,16 @@ const Record = require('../../models/record.js')
 
 let recordList = []
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
+  const categorySelected = req.body.category
+
   let totalAmount = 0
   let recordList = []
   let year = ''
   let month = ''
   let day = ''
 
-  Record.find()
+  Record.find({ category: categorySelected })
     .lean()
     .sort({ _id: 'asc' })
     .then((record) => {
@@ -41,7 +43,12 @@ router.get('/', (req, res) => {
     .lean()
     .sort({ _id: 'asc' })
     .then((categories) =>
-      res.render('index', { recordList, totalAmount, categories })
+      res.render('category', {
+        recordList,
+        totalAmount,
+        categories,
+        categorySelected,
+      })
     )
     .catch((error) => console.log(error))
 })

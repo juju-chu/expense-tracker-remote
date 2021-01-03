@@ -39,6 +39,12 @@ db.once('open', () => {
       categoryIcon: '<i class="fas fa-shuttle-van"></i>',
       amount: 200,
     },
+    {
+      name: '還錢',
+      category: '其他',
+      categoryIcon: '<i class="fas fa-pen"></i>',
+      amount: 500,
+    },
   ]).then(() => {
     db.close()
     console.log('recordSeeder.js done.')
