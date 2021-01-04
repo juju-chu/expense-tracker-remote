@@ -37,19 +37,20 @@ router.post('/', (req, res) => {
         record.date = `${year}-${month}-${day}`
       })
     })
-    .catch((error) => console.log(error))
-
-  Category.find()
-    .lean()
-    .sort({ _id: 'asc' })
-    .then((categories) =>
-      res.render('category', {
-        recordList,
-        totalAmount,
-        categories,
-        categorySelected,
-      })
-    )
+    .then(() => {
+      Category.find()
+        .lean()
+        .sort({ _id: 'asc' })
+        .then((categories) =>
+          res.render('category', {
+            recordList,
+            totalAmount,
+            categories,
+            categorySelected,
+          })
+        )
+        .catch((error) => console.log(error))
+    })
     .catch((error) => console.log(error))
 })
 

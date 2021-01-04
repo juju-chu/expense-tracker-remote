@@ -35,14 +35,13 @@ router.get('/', (req, res) => {
         record.date = `${year}-${month}-${day}`
       })
     })
-    .catch((error) => console.log(error))
-
-  Category.find()
-    .lean()
-    .sort({ _id: 'asc' })
-    .then((categories) =>
-      res.render('index', { recordList, totalAmount, categories })
-    )
+    .then(() => {
+      Category.find()
+      .lean()
+      .sort({ _id: 'asc' })
+      .then((categories) => res.render('index', { recordList, totalAmount, categories }))
+      .catch((error) => console.log(error))
+    })
     .catch((error) => console.log(error))
 })
 

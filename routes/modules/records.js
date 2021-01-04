@@ -22,32 +22,33 @@ router.get('/:id/edit', (req, res) => {
   Category.find()
     .lean()
     .then((categories) => (categoryList = categories))
-    .catch((error) => console.log(error))
-
-  return Record.findById(id)
-    .lean()
-    .then((record) => {
-      recordEdited = record
-    })
-    .then(() => (recordCategory = recordEdited.category))
     .then(() => {
-      const date = new Date(recordEdited.date)
-      year = date.getFullYear()
-      month = date.getMonth() + 1
-      if (month < 10) {
-        month = '0' + month
-      }
-      day = date.getDate()
-      if (day < 10) {
-        day = '0' + day
-      }
+      return Record.findById(id)
+        .lean()
+        .then((record) => {
+          recordEdited = record
+        })
+        .then(() => (recordCategory = recordEdited.category))
+        .then(() => {
+          const date = new Date(recordEdited.date)
+          year = date.getFullYear()
+          month = date.getMonth() + 1
+          if (month < 10) {
+            month = '0' + month
+          }
+          day = date.getDate()
+          if (day < 10) {
+            day = '0' + day
+          }
+        })
+        .then(() => {
+          recordEdited.date = `${year}-${month}-${day}`
+        })
+        .then(() =>
+          res.render('edit', { recordEdited, recordCategory, categoryList })
+        )
+        .catch((error) => console.log(error))
     })
-    .then(() => {
-      recordEdited.date = `${year}-${month}-${day}`
-    })
-    .then(() =>
-      res.render('edit', { recordEdited, recordCategory, categoryList })
-    )
     .catch((error) => console.log(error))
 })
 
@@ -94,14 +95,15 @@ router.put('/:id', (req, res) => {
         }
       })
     })
-    .catch((error) => console.log(error))
-
-  return Record.findById(id)
-    .then((record) => {
-      record = Object.assign(record, req.body)
-      return record.save()
+    .then(() => {
+      return Record.findById(id)
+        .then((record) => {
+          record = Object.assign(record, req.body)
+          return record.save()
+        })
+        .then(() => res.redirect('/'))
+        .catch((error) => console.log(error))
     })
-    .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
 
