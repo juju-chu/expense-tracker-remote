@@ -12,40 +12,22 @@ router.get('/new', (req, res) => {
 
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
-  let categoryList = []
-  let recordEdited = []
-  let recordCategory = ''
-  let year = ''
-  let month = ''
-  let day = ''
-
   Category.find()
     .lean()
-    .then((categories) => (categoryList = categories))
-    .then(() => {
-      return Record.findById(id)
+    .then((categories) => {
+      Record.findById(id)
         .lean()
         .then((record) => {
-          recordEdited = record
+          const recordCategory = record.category
+          record.date = new Date(record.date).toISOString().slice(0, 10)
+          return { record, recordCategory }
         })
-        .then(() => (recordCategory = recordEdited.category))
-        .then(() => {
-          const date = new Date(recordEdited.date)
-          year = date.getFullYear()
-          month = date.getMonth() + 1
-          if (month < 10) {
-            month = '0' + month
-          }
-          day = date.getDate()
-          if (day < 10) {
-            day = '0' + day
-          }
-        })
-        .then(() => {
-          recordEdited.date = `${year}-${month}-${day}`
-        })
-        .then(() =>
-          res.render('edit', { recordEdited, recordCategory, categoryList })
+        .then(({ record, recordCategory }) =>
+          res.render('edit', {
+            recordEdited: record,
+            recordCategory,
+            categoryList: categories,
+          })
         )
         .catch((error) => console.log(error))
     })
@@ -75,27 +57,20 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  let targetCategory = ''
-  let categoryList = []
-
   Category.find()
     .lean()
     .then((categories) => {
-      categoryList = categories
-    })
-    .then(() => {
-      targetCategory = categoryList.find(
+      const targetCategory = categories.find(
         (category) => category.name === req.body.category
       )
-    })
-    .then(() => {
-      categoryList.forEach((category) => {
+      categories.forEach((category) => {
         if (category.name === targetCategory.name) {
           req.body.categoryIcon = category.icon
         }
       })
+      return { req }
     })
-    .then(() => {
+    .then(({ req }) => {
       return Record.findById(id)
         .then((record) => {
           record = Object.assign(record, req.body)
