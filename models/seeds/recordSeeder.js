@@ -1,8 +1,9 @@
-const Category = require('../record.js')
+const Record = require('../record.js')
 const db = require('../../config/mongoose.js')
+const Category = require('../../models/category.js')
 
 db.once('open', () => {
-  Category.create([
+  Record.create([
     {
       name: '電費',
       category: '家居物業',
