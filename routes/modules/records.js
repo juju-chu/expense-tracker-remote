@@ -35,50 +35,19 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  Category.find()
-    .lean()
-    .then((categories) => {
-      const targetCategory = categories.find(
-        (category) => category.name === req.body.category
-      )
-      categories.forEach((category) => {
-        if (category.name === targetCategory.name) {
-          req.body.categoryIcon = category.icon
-        }
-      })
-    })
-    .then(() => {
-      return Record.create(req.body)
-        .then(() => res.redirect('/'))
-        .catch((error) => console.log(error))
-    })
+  Record.create(req.body)
+    .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  Category.find()
-    .lean()
-    .then((categories) => {
-      const targetCategory = categories.find(
-        (category) => category.name === req.body.category
-      )
-      categories.forEach((category) => {
-        if (category.name === targetCategory.name) {
-          req.body.categoryIcon = category.icon
-        }
-      })
-      return { req }
+  Record.findById(id)
+    .then((record) => {
+      record = Object.assign(record, req.body)
+      return record.save()
     })
-    .then(({ req }) => {
-      return Record.findById(id)
-        .then((record) => {
-          record = Object.assign(record, req.body)
-          return record.save()
-        })
-        .then(() => res.redirect('/'))
-        .catch((error) => console.log(error))
-    })
+    .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
 
